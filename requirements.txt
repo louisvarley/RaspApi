@@ -1,0 +1,4 @@
+flasgger
+flask
+scapy
+requests
