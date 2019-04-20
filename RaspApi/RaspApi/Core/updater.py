@@ -8,12 +8,11 @@ class updateService(object):
     
     def update(): 
         dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.realpath(__file__)))))
-        cmd = 'cd ' + '"' + dir + '"'
-        run(cmd)
+
         cmd = 'git init "' + dir + '"'
         run(cmd)
         
-        cmd = "git remote add origin https://github.com/louisvarley/RaspApi"
+        cmd = "git remote add origin https://github.com/louisvarley/RaspApi.git"
         run(cmd)
         cmd = "git branch --set-upstream-to=origin/master master"
         run(cmd)
