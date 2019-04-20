@@ -8,5 +8,15 @@ class updateService(object):
     
     def update(): 
         dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.realpath(__file__)))))
-        cmd = "git clone git@github.com:louisvarley/RaspApi.git " + dir
+        cmd = "cd " + dir
+        run(cmd)
+        cmd = "git init"
+        run(cmd)
+        cmd = "git remote add origin https://github.com/louisvarley/RaspApi"
+        run(cmd)
+        cmd = "git branch --set-upstream-to=origin/master master"
+        run(cmd)
+        cmd = "git fetch"
+        run(cmd)
+        cmd = "git pull"
         run(cmd)
