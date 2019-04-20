@@ -1,1 +1,4 @@
-Flask<1
+flasgger
+flask
+scapy
+requests

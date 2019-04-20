@@ -1,4 +1,0 @@
-flasgger
-flask
-scapy
-requests
