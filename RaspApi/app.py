@@ -8,7 +8,8 @@ import flasgger
 import time
 
 from os import environ
-from RaspApi import app, discovery
+from RaspApi import app
+from RaspApi.Core import discovery, updater
 from flask import Flask, jsonify, redirect
 from flasgger import Swagger
 from flasgger.utils import swag_from
@@ -26,6 +27,10 @@ app.config['SWAGGER'] = {
 swagger = Swagger(app)
 
 if __name__ == '__main__':
+
+    i = updater.updateService
+    i.update()
+
     HOST = environ.get('SERVER_HOST', '0.0.0.0')
     try:
         PORT = int(environ.get('SERVER_PORT', '5555'))
