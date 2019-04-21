@@ -2,3 +2,5 @@ flasgger
 flask
 scapy
 requests
+sh
+pbs
