@@ -8,9 +8,12 @@ class updateService(object):
 
         gitBuildUri = "https://raw.githubusercontent.com/louisvarley/RaspApi/master/build_number"
         with urlopen(gitBuildUri) as url:
-            currentBuild = url.read()
+            remoteBuild = url.read().decode()
+
+        print("This Build " + str(thisBuild))
+        print("Available Build " + str(remoteBuild))
            
-        if(thisBuild != currentBuild):
+        if(thisBuild != remoteBuild):
             return True
         else:
             return False
