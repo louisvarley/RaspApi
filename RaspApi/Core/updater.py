@@ -1,5 +1,6 @@
 from urllib.request import urlopen
 import zipfile36
+import io
 
 class updateService(object):
     
@@ -26,5 +27,7 @@ class updateService(object):
 
         print("Downloading and Installing Update...")
 
-        with zipfile.ZipFile(gitArchiveUri, "r") as z:
-            z.extractall(workingDir)
+         with urlopen(gitArchiveUri) as r:
+             with zipfile36.ZipFile(io.BytesIO(r.content), "r") as z:
+                        z.extractall(workingDir)
+       
