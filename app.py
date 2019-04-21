@@ -10,7 +10,9 @@ import os
 
 from os import environ
 from RaspApi import app
-from RaspApi.Core import discovery, updater
+from RaspApi import views
+from RaspApi.services import discovery, updater
+
 from flask import Flask, jsonify, redirect
 from flasgger import Swagger
 from flasgger.utils import swag_from
