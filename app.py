@@ -29,6 +29,11 @@ app.config['SWAGGER'] = {
 
 swagger = Swagger(app)
 
+@app.route('/')
+def root():
+    return redirect("/apidocs/", code=302)
+
+
 if __name__ == '__main__':
 
     updateService = updater.updateService
