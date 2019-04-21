@@ -4,3 +4,4 @@ scapy
 requests
 sh
 pbs
+zipfile36

@@ -1,4 +1,5 @@
 from urllib.request import urlopen
+import zipfile36
 
 class updateService(object):
     
@@ -20,4 +21,10 @@ class updateService(object):
                 
 
     def update(workingDir):
-        resetCheck = git("--git-dir=" + workingDir + ".git/", "--work-tree=" + workingDir, "reset", "--hard", "origin/master")
+
+        gitArchiveUri = "https://github.com/louisvarley/RaspApi/archive/master.zip"
+
+        print("Downloading and Installing Update...")
+
+        with zipfile.ZipFile(gitArchiveUri, "r") as z:
+            z.extractall(workingDir)
