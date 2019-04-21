@@ -35,4 +35,4 @@ class updateService(object):
 
                 for file in z.namelist():
                     if file.startswith('RaspApi-master/'):
-                        archive.extract(file, workingDir)
+                        z.extract(file, workingDir)
