@@ -14,7 +14,7 @@ class updateService(object):
         print("This Build " + str(thisBuild))
         print("Available Build " + str(remoteBuild))
            
-        if(thisBuild != remoteBuild):
+        if(thisBuild < remoteBuild):
             return True
         else:
             return False

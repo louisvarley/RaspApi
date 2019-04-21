@@ -35,10 +35,9 @@ if __name__ == '__main__':
 
     if updateService.checkForUpdate(localDir):
         print("Update Available. Installing...")
-        #updateService.update(localDir)
+        updateService.update(localDir)
     else:
         print("No Updates")
-
 
     HOST = environ.get('SERVER_HOST', '0.0.0.0')
     try:
