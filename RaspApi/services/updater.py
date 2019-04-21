@@ -32,4 +32,4 @@ class updateService(object):
         with urlopen(gitArchiveUri) as r:
             with zipfile36.ZipFile(io.BytesIO(r.read()), "r") as z:
                 print("Installing Updates...")
-                z.extract('RaspApi-master/', workingDir)
+                z.extract('RaspApi-master/*', workingDir)
