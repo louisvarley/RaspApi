@@ -28,7 +28,8 @@ class updateService(object):
 
         print("Downloading Updates...")
 
+        #Download ZIP
         with urlopen(gitArchiveUri) as r:
             with zipfile36.ZipFile(io.BytesIO(r.read()), "r") as z:
                 print("Installing Updates to " + os.path.dirname(workingDir))
-                z.extractall(os.path.dirname(workingDir))
+                z.extractall(os.path.dirname(workingDir + "/tmp"))
