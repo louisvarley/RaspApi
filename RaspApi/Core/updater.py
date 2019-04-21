@@ -28,6 +28,8 @@ class updateService(object):
         print("Downloading and Installing Update...")
 
         with urlopen(gitArchiveUri) as r:
-            with zipfile36.ZipFile(io.BytesIO(r.content), "r") as z:
-                z.extractall(workingDir)
+            with zipfile36.ZipFile(io.BytesIO(r.read()), "r") as z:
+                files = [n for n in z.namelist() 
+                    if n.startswith('/RaspApi-master/') and not n.endswith('/RaspApi-master/')]
+                    z.extractall(path=workingDir , members=files)
        
