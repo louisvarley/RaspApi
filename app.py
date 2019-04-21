@@ -6,6 +6,7 @@ import argparse
 import threading
 import flasgger
 import time
+import os
 
 from os import environ
 from RaspApi import app

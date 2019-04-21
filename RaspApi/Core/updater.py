@@ -1,4 +1,4 @@
-import urllib
+from urllib.request import urlopen
 
 class updateService(object):
     
@@ -6,9 +6,9 @@ class updateService(object):
         with open('build_number') as f:
             thisBuild = f.readline()
 
-        gitBuildUri = " https://raw.githubusercontent.com/louisvarley/RaspApi/master/build_number"
-        f = urllib.urlopen(gitBuildUri)
-        currentBuild = f.read()
+        gitBuildUri = "https://raw.githubusercontent.com/louisvarley/RaspApi/master/build_number"
+        with urlopen(gitBuildUri) as url:
+            currentBuild = url.read()
            
         if(thisBuild != currentBuild):
             return True
