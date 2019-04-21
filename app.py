@@ -28,15 +28,13 @@ swagger = Swagger(app)
 
 if __name__ == '__main__':
 
-
-
     updateService = updater.updateService
     
     localDir = os.path.dirname(os.path.realpath(__file__))
 
     if updateService.checkForUpdate(localDir):
         print("Update Available. Installing...")
-        updateService.update(localDir)
+        #updateService.update(localDir)
     else:
         print("No Updates")
 
