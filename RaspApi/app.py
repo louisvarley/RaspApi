@@ -28,8 +28,16 @@ swagger = Swagger(app)
 
 if __name__ == '__main__':
 
-    i = updater.updateService
-    i.update()
+
+
+    updateService = updater.updateService
+    
+    localDir = os.path.dirname(os.path.realpath(__file__))
+
+    if updateService.checkForUpdate(localDir):
+        print("Update Available. Installing...")
+        updateService.update(localDir)
+
 
     HOST = environ.get('SERVER_HOST', '0.0.0.0')
     try:
