@@ -1,5 +1,6 @@
 from urllib.request import urlopen
 import zipfile36
+import glob, os, shutil
 import io
 
 class updateService(object):
@@ -25,11 +26,9 @@ class updateService(object):
 
         gitArchiveUri = "https://github.com/louisvarley/RaspApi/archive/master.zip"
 
-        print("Downloading and Installing Update...")
+        print("Downloading Updates...")
 
         with urlopen(gitArchiveUri) as r:
             with zipfile36.ZipFile(io.BytesIO(r.read()), "r") as z:
-                files = [n for n in z.namelist() 
-                    if n.startswith('/RaspApi-master/') and not n.endswith('/RaspApi-master/')]
-                    z.extractall(path=workingDir , members=files)
-       
+                print("Installing Updates to " + os.path.dirname(workingDir))
+                z.extractall(os.path.dirname(workingDir))
