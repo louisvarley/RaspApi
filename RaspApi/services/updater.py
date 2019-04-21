@@ -31,10 +31,6 @@ class updateService(object):
         #Download ZIP
         with urlopen(gitArchiveUri) as r:
             with zipfile36.ZipFile(io.BytesIO(r.read()), "r") as z:
-                print("Installing Updates to " + os.path.dirname(workingDir))
-                z.extractall(os.path.dirname(workingDir + "/tmp"))
-
-                files = os.listdir(workingDir + "/tmp/RaspApi-master")
-
-                for f in files:
-                        shutil.move(workingDir + "/tmp/RaspApi-master"+f, workingDir)
+                print("Installing Updates...")
+                z.extract('RaspApi-master', workingDir)
+              
