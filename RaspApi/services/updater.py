@@ -59,7 +59,7 @@ class updateService(Thread):
         with urlopen(gitArchiveUri) as r:
             with zipfile36.ZipFile(io.BytesIO(r.read()), "r") as z:
                 logging.loggingService.logInfo("Installing Version 1.0." + str(remoteBuild) )
-                z.extractAll(self.workingDir)
+                z.extractall(self.workingDir)
      
         #Replace Local files
         rootSrcDir = self.workingDir + "/RaspApi-master"
