@@ -53,12 +53,12 @@ class updateService(Thread):
         gitArchiveUri = "https://github.com/louisvarley/RaspApi/archive/master.zip"
         remoteBuild = self.getRemoteBuild()
         
-        logging.loggingService.logInfo("Downloading Version 1.0." + str(remoteBuild) )
+        logging.loggingService.logInfo("Downloading Update..." )
 
         #Download ZIP and extract
         with urlopen(gitArchiveUri) as r:
             with zipfile36.ZipFile(io.BytesIO(r.read()), "r") as z:
-                logging.loggingService.logInfo("Installing Version 1.0." + str(remoteBuild) )
+                logging.loggingService.logInfo("Installing Update..." )
                 z.extractall(self.workingDir)
      
         #Replace Local files
