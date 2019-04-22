@@ -21,6 +21,7 @@ class updateService(Thread):
         logging.loggingService.logInfo(" * Running RaspiApi v1.0." + str(self.getLocalBuild()))
         
         while 1:
+            logging.loggingService.logInfo("Checking for updates...")
             if self.checkForUpdate():
                 self.update()
             sleep(60)   
