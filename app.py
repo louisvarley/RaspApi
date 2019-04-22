@@ -43,9 +43,8 @@ if __name__ == '__main__':
     localBuild = updateService.getLocalBuild();
 
     print("v1.0." + str(updateService.getLocalBuild()))
-
     if updateService.checkForUpdate(localDir):
-        print("Update Available [" + str(updateService.getRemoteBuild()) + "]. Installing...")
+        print("Update Available [v1.0." + str(updateService.getRemoteBuild()) + "] Installing...")
         updateService.update(localDir)
     else:
         print("No Updates")

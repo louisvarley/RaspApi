@@ -57,6 +57,6 @@ class updateService(object):
 
         #Remove temp
         if os.path.exists(rootSrcDir):
-            os.remove(rootSrcDir)
+            shutil.rmtree(rootSrcDir)
 
 
