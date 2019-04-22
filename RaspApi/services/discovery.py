@@ -1,6 +1,7 @@
 from threading import Thread
 from time import sleep
 from socket import socket, AF_INET, SOCK_DGRAM, SOL_SOCKET, SO_BROADCAST, gethostbyname, gethostname
+from RaspApi.services import logging
 
 class Discovery():
        MAGIC = "RaspApi"
@@ -9,6 +10,7 @@ class Discovery():
 class Monitor(Thread):
 
     def __init__(self):
+        logging.loggingService.logInfo(" * Starting Discovery Monitor")
         Thread.__init__(self)
 
     def run(self):
@@ -24,6 +26,7 @@ class Monitor(Thread):
 class Broadcast(Thread):
 
     def __init__(self):
+        logging.loggingService.logInfo(" * Starting Discovery Broadcast")
         Thread.__init__(self)
 
     def run(self):

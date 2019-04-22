@@ -14,11 +14,13 @@ class updateService(Thread):
 
     def __init__(self, workingDir):
         Thread.__init__(self)
+        logging.loggingService.logInfo(" * Starting Auto Updater...")
         self.workingDir = workingDir
     
     def run(self):
-         logging.loggingService.logInfo("v1.0." + str(self.getLocalBuild()))
-         while 1:
+        logging.loggingService.logInfo(" * Running RaspiApi v1.0." + str(self.getLocalBuild()))
+        
+        while 1:
             if self.checkForUpdate():
                 self.update()
             sleep(60)   
