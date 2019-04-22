@@ -1,26 +1,25 @@
+import json
+import flasgger
+
 from flask import Flask, jsonify, redirect
 from urllib.request import urlopen
-import json
+from flasgger import Swagger
+from flasgger.utils import swag_from
 
 class swagFrom(object):
 
     def __init__(self):
-        print("")
+        print()
     
-    def call(self,path,swag):
+    def call(self,url,app,swagger):
+        #Replace with URL
         with urlopen("https://my-landscape-inst-api-uat.azurewebsites.net/swagger/docs/v1") as url:
             data = json.loads(url.read().decode())
-        swagrtn = ""
+
         for path in data['paths']:
-            swagrtn = swagrtn + self.loadRemoteSwagResource(str(path),str(data['paths'][path]))
-
-        return swagrtn
-            
-
-    def loadRemoteSwagResource(self,path,swag):
-                return("""
+            exec("""
 @app.route('""" + str(path) + """')
-#@swag_from(""" + str(path) + """)
+@swag_from(""" + str(data['paths'][path]) + """)
 def """ + str(path).replace("/","").replace("{","").replace("}","").replace(")","").replace("(","") + """():
     return {'response':'response'}
-    """)
+        """)  

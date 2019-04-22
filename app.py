@@ -1,20 +1,20 @@
 import urllib
 import json 
 import ssl
-import scapy.all as scapy
-import argparse
 import threading
 import flasgger
 import time
 import os
 import sys
+import json
 
 from os import environ
+
 from RaspApi import app
-from RaspApi import views
 from RaspApi.services import discovery, updater
 from RaspApi.utilities import logging, swagFrom
 
+from urllib.request import urlopen
 from flask import Flask, jsonify, redirect
 from flasgger import Swagger
 from flasgger.utils import swag_from
@@ -34,6 +34,9 @@ swagger = Swagger(app)
 @app.route('/')
 def root():
     return redirect("/apidocs/", code=302)
+
+swag = swagFrom.swagFrom() 
+swag.call("",app,swagger)
 
 if __name__ == '__main__':
 
@@ -67,10 +70,6 @@ if __name__ == '__main__':
     broadcastService.setName('Broadcast')
     broadcastService.daemon = True
     broadcastService.start()
-
-    swag = swagFrom.swagFrom() 
-
-    exec(swag.call("none",app))
 
     while True:
         time.sleep(1) #Main Loop Thread
