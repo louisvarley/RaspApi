@@ -1,12 +1,30 @@
 from urllib.request import urlopen
+from threading import Thread
+from time import sleep
+from RaspApi.services import logging
+
 import zipfile36
 import glob, os, shutil
 import io
 
-class updateService(object):
+
+
+class updateService(Thread):
+    """Updates the current version automaticly, run as thread"""
+
+    def __init__(self, workingDir):
+        Thread.__init__(self)
+        self.workingDir = workingDir
     
+    def run(self):
+         logging.loggingService.logInfo("v1.0." + str(self.getLocalBuild()))
+         while 1:
+            if self.checkForUpdate():
+                self.update()
+            sleep(60)   
+
     def getLocalBuild(self):
-        with open('build_number') as f:
+        with open(self.workingDir + '/build_number') as f:
             thisBuild = f.readline()
         return thisBuild
 
@@ -16,33 +34,36 @@ class updateService(object):
             remoteBuild = url.read().decode()
         return remoteBuild
 
-    def checkForUpdate(self, workingDir):
+    def checkForUpdate(self):
      
         localBuild = self.getLocalBuild()
         remoteBuild = self.getRemoteBuild()
            
         if(localBuild < remoteBuild):
+            logging.loggingService.logInfo("Version 1.0." + str(remoteBuild) + " is available")
             return True
         else:
             return False
                 
 
-    def update(self, workingDir):
+    def update(self):
 
         gitArchiveUri = "https://github.com/louisvarley/RaspApi/archive/master.zip"
-        print("Downloading Updates...")
+        remoteBuild = self.getRemoteBuild()
+        
+        logging.loggingService.logInfo("Downloading Version 1.0." + str(remoteBuild) )
 
         #Download ZIP and extract
         with urlopen(gitArchiveUri) as r:
             with zipfile36.ZipFile(io.BytesIO(r.read()), "r") as z:
-                print("Installing Updates...")
+                logging.loggingService.logInfo("Installing Version 1.0." + str(remoteBuild) )
                 for file in z.namelist():
                     if file.startswith('RaspApi-master/'):
-                        z.extract(file, workingDir)
+                        z.extract(file, self.workingDir)
 
         #Replace Local files
-        rootSrcDir = workingDir + "/RaspApi-master"
-        rootTargetDir = workingDir
+        rootSrcDir = self.workingDir + "/RaspApi-master"
+        rootTargetDir = self.workingDir
 
         for srcDir, dirs, files in os.walk(rootSrcDir):
             dstDir = srcDir.replace(rootSrcDir, rootTargetDir)
@@ -58,5 +79,6 @@ class updateService(object):
         #Remove temp
         if os.path.exists(rootSrcDir):
             shutil.rmtree(rootSrcDir)
-
+        
+        logging.loggingService.logInfo("Version 1.0." + str(remoteBuild) + " successfully installed")
 

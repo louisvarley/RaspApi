@@ -28,6 +28,9 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="RaspApi\services\logging.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="RaspApi\services\updater.py">
       <SubType>Code</SubType>
     </Compile>

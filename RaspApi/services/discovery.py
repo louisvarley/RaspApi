@@ -8,9 +8,8 @@ class Discovery():
 
 class Monitor(Thread):
 
-    def __init__(self, val):
+    def __init__(self):
         Thread.__init__(self)
-        self.val = val
 
     def run(self):
         s = socket(AF_INET, SOCK_DGRAM) #create UDP socket
@@ -24,9 +23,8 @@ class Monitor(Thread):
  
 class Broadcast(Thread):
 
-    def __init__(self, val):
+    def __init__(self):
         Thread.__init__(self)
-        self.val = val
 
     def run(self):
         s = socket(AF_INET, SOCK_DGRAM) #create UDP socket
