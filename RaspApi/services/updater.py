@@ -41,6 +41,9 @@ class updateService(Thread):
      
         localBuild = self.getLocalBuild()
         remoteBuild = self.getRemoteBuild()
+
+        logging.loggingService.logInfo("This version " + localBuild)
+        logging.loggingService.logInfo("Remote version " + remoteBuild)
            
         if(localBuild < remoteBuild):
             logging.loggingService.logInfo("A new update is available")
