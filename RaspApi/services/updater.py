@@ -5,42 +5,42 @@ import io
 
 class updateService(object):
     
-    def getBuild():
+    def getLocalBuild(self):
         with open('build_number') as f:
             thisBuild = f.readline()
         return thisBuild
 
-    def checkForUpdate(workingDir):
-     
-        thisBuild = getBuild()
+    def getRemoteBuild(self):
         gitBuildUri = "https://raw.githubusercontent.com/louisvarley/RaspApi/master/build_number"
         with urlopen(gitBuildUri) as url:
             remoteBuild = url.read().decode()
+        return remoteBuild
 
-        print("This Build " + str(thisBuild))
-        print("Available Build " + str(remoteBuild))
+    def checkForUpdate(self, workingDir):
+     
+        localBuild = self.getLocalBuild()
+        remoteBuild = self.getRemoteBuild()
            
-        if(thisBuild < remoteBuild):
+        if(localBuild < remoteBuild):
             return True
         else:
             return False
                 
 
-    def update(workingDir):
+    def update(self, workingDir):
 
         gitArchiveUri = "https://github.com/louisvarley/RaspApi/archive/master.zip"
-
         print("Downloading Updates...")
 
-        #Download ZIP
+        #Download ZIP and extract
         with urlopen(gitArchiveUri) as r:
             with zipfile36.ZipFile(io.BytesIO(r.read()), "r") as z:
                 print("Installing Updates...")
-
                 for file in z.namelist():
                     if file.startswith('RaspApi-master/'):
                         z.extract(file, workingDir)
 
+        #Replace Local files
         rootSrcDir = workingDir + "/RaspApi-master"
         rootTargetDir = workingDir
 
@@ -54,6 +54,8 @@ class updateService(object):
                 if os.path.exists(dstFile):
                     os.remove(dstFile)
                     shutil.move(srcFile, dstDir)
+
+        #Remove temp
         if os.path.exists(rootSrcDir):
             os.remove(rootSrcDir)
 

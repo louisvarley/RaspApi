@@ -7,6 +7,7 @@ import threading
 import flasgger
 import time
 import os
+import sys
 
 from os import environ
 from RaspApi import app
@@ -36,12 +37,15 @@ def root():
 
 if __name__ == '__main__':
 
-    updateService = updater.updateService
-    
+    updateService = updater.updateService()    
     localDir = os.path.dirname(os.path.realpath(__file__))
 
+    localBuild = updateService.getLocalBuild();
+
+    print("v1.0." + str(updateService.getLocalBuild()))
+
     if updateService.checkForUpdate(localDir):
-        print("Update Available. Installing...")
+        print("Update Available [" + str(updateService.getRemoteBuild()) + "]. Installing...")
         updateService.update(localDir)
     else:
         print("No Updates")
@@ -67,4 +71,9 @@ if __name__ == '__main__':
     broadcastService.start()
 
     while True:
-        time.sleep(10) #Main Loop Thread
+        time.sleep(1) #Main Loop Thread
+
+        #Restart Main Thread if build has changed (updated)
+        if(updateService.getLocalBuild() > localBuild):
+            print("Restarting following update...")
+            os.execv(sys.executable, ['python'] + sys.argv)
