@@ -1,13 +1,11 @@
 from urllib.request import urlopen
 from threading import Thread
 from time import sleep
-from RaspApi.services import logging
+from RaspApi.utilities import logging
 
 import zipfile36
 import glob, os, shutil
 import io
-
-
 
 class updateService(Thread):
     """Updates the current version automaticly, run as thread"""
@@ -21,7 +19,6 @@ class updateService(Thread):
         logging.loggingService.logInfo(" * Running RaspiApi v1.0." + str(self.getLocalBuild()))
         
         while 1:
-            logging.loggingService.logInfo("Checking for updates...")
             if self.checkForUpdate():
                 self.update()
             sleep(60)   
@@ -47,7 +44,6 @@ class updateService(Thread):
             return True
         else:
             return False
-                
 
     def update(self):
 

@@ -28,7 +28,7 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="RaspApi\services\logging.py">
+    <Compile Include="RaspApi\utilities\logging.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="RaspApi\services\updater.py">
@@ -37,7 +37,7 @@
     <Compile Include="RaspApi\services\__init__.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="RaspApi\swagFrom.py">
+    <Compile Include="RaspApi\utilities\swagFrom.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="RaspApi\services\discovery.py">
@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="RaspApi\" />
+    <Folder Include="RaspApi\utilities\" />
     <Folder Include="RaspApi\services\" />
     <Folder Include="RaspApi\static\" />
     <Folder Include="RaspApi\static\content\" />

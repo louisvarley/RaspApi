@@ -1,7 +1,7 @@
 from threading import Thread
 from time import sleep
 from socket import socket, AF_INET, SOCK_DGRAM, SOL_SOCKET, SO_BROADCAST, gethostbyname, gethostname
-from RaspApi.services import logging
+from RaspApi.utilities import logging
 
 class Discovery():
        MAGIC = "RaspApi"

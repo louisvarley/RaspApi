@@ -12,7 +12,8 @@ import sys
 from os import environ
 from RaspApi import app
 from RaspApi import views
-from RaspApi.services import discovery, updater, logging
+from RaspApi.services import discovery, updater
+from RaspApi.utilities import logging, swagFrom
 
 from flask import Flask, jsonify, redirect
 from flasgger import Swagger
@@ -33,7 +34,6 @@ swagger = Swagger(app)
 @app.route('/')
 def root():
     return redirect("/apidocs/", code=302)
-
 
 if __name__ == '__main__':
 
@@ -67,6 +67,10 @@ if __name__ == '__main__':
     broadcastService.setName('Broadcast')
     broadcastService.daemon = True
     broadcastService.start()
+
+    swag = swagFrom.swagFrom() 
+
+    exec(swag.call("none",app))
 
     while True:
         time.sleep(1) #Main Loop Thread
