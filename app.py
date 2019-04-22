@@ -74,4 +74,4 @@ if __name__ == '__main__':
         #Restart Main Thread if build has changed (updated)
         if(updateService.getLocalBuild() > localBuild):                  
             logging.loggingService.logInfo("Restarting following update...")
-            os.execv(sys.executable, ['python'] + sys.argv)
+            os.execv(sys.executable, ['python3'] + sys.argv)
