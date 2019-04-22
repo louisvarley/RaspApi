@@ -12,12 +12,14 @@ from os import environ
 
 from RaspApi import app
 from RaspApi.services import discovery, updater
-from RaspApi.utilities import logging, swagFrom
+from RaspApi.utils import logging, swagUtils
 
 from urllib.request import urlopen
 from flask import Flask, jsonify, redirect
-from flasgger import Swagger
+
 from flasgger.utils import swag_from
+from flasgger import Swagger
+
 from time import sleep
 from socket import socket, AF_INET, SOCK_DGRAM, SOL_SOCKET, SO_BROADCAST, gethostbyname, gethostname
 
@@ -31,12 +33,11 @@ app.config['SWAGGER'] = {
 
 swagger = Swagger(app)
 
+swagUtils.swagRemote.swagFromURL("",app,swagger)
+
 @app.route('/')
 def root():
     return redirect("/apidocs/", code=302)
-
-swag = swagFrom.swagFrom() 
-swag.call("",app,swagger)
 
 if __name__ == '__main__':
 

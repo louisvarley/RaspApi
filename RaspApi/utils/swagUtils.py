@@ -6,12 +6,10 @@ from urllib.request import urlopen
 from flasgger import Swagger
 from flasgger.utils import swag_from
 
-class swagFrom(object):
+class swagRemote():
+    """ Static Class for some Remote Swagging Toolsets """
 
-    def __init__(self):
-        print()
-    
-    def call(self,url,app,swagger):
+    def swagFromURL(url,app,swagger):
         #Replace with URL
         with urlopen("https://my-landscape-inst-api-uat.azurewebsites.net/swagger/docs/v1") as url:
             data = json.loads(url.read().decode())

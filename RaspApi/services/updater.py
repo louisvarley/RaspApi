@@ -1,7 +1,7 @@
 from urllib.request import urlopen
 from threading import Thread
 from time import sleep
-from RaspApi.utilities import logging
+from RaspApi.utils import logging
 
 import zipfile36
 import glob, os, shutil
