@@ -1,38 +1,32 @@
-import urllib
-import json 
+import urllib 
 import ssl
 import threading
 import flasgger
 import time
 import os
 import sys
-import json
 
-from os import environ
-
-from RaspApi import app
+import RaspApi
 from RaspApi.services import discovery, updater
 from RaspApi.utils import logging, swagUtils
 
+from time import sleep
+from os import environ
 from urllib.request import urlopen
-from flask import Flask, jsonify, redirect
+from flask import Flask, redirect
 
 from flasgger.utils import swag_from
 from flasgger import Swagger
-
-from time import sleep
-from socket import socket, AF_INET, SOCK_DGRAM, SOL_SOCKET, SO_BROADCAST, gethostbyname, gethostname
 
 ssl._create_default_https_context = ssl._create_unverified_context
 app = Flask(__name__)
 
 app.config['SWAGGER'] = {
-  'title': 'RaspApi',
-  'uiversion': 2
+  'title': RaspApi.title,
+  'uiversion': RaspApi.uiversion
 }
 
 swagger = Swagger(app)
-
 swagUtils.swagRemote.swagFromURL("",app,swagger)
 
 @app.route('/')
@@ -43,39 +37,40 @@ if __name__ == '__main__':
 
     HOST = environ.get('SERVER_HOST', '0.0.0.0')
     try:
-        PORT = int(environ.get('SERVER_PORT', '5555'))
+        RaspApi.port = int(environ.get('SERVER_PORT', RaspApi.port))
     except ValueError:
-        PORT = 5555
+        RaspApi.port = 5555
 
-    workingDir = os.path.dirname(os.path.realpath(__file__))
-
-    with open(workingDir + '/build_number') as f:
-            localBuild = f.readline()
-
-    updateService = updater.updateService(workingDir)   
-    updateService.setName('Updater')
+    #Start Update Service Thread
+    updateService = updater.updateService()   
+    updateService.setName('Updater Service')
     updateService.daemon = True
     updateService.start()
+    RaspApi.updateService = updateService
 
-    flask = threading.Thread(target=app.run,args=(HOST, PORT))
+    #Start Flask Service Thread
+    flask = threading.Thread(target=app.run,args=(HOST, RaspApi.port))
     flask.setName('Flask Server')
     flask.daemon = True
     flask.start()
+    RaspApi.flask = flask
 
-    monitorService = discovery.Monitor()
-    monitorService.setName('Monitor')
-    monitorService.daemon = True
-    monitorService.start()
+    #Start the Discovery Monitor Service
+    discoveryMonitor = discovery.Monitor()
+    discoveryMonitor.setName('Monitor Service')
+    discoveryMonitor.daemon = True
+    discoveryMonitor.start()
+    RaspApi.discoveryMonitor = discoveryMonitor
 
-    broadcastService = discovery.Broadcast()
-    broadcastService.setName('Broadcast')
-    broadcastService.daemon = True
-    broadcastService.start()
+    #Start the Discovery Broadcast Service
+    discoveryBroadcast = discovery.Broadcast()
+    discoveryBroadcast.setName('Broadcast Service')
+    discoveryBroadcast.daemon = True
+    discoveryBroadcast.start()
+    RaspApi.discoveryBroadcast = discoveryBroadcast
 
     while True:
-        time.sleep(1) #Main Loop Thread
+        time.sleep(1)
 
-        #Restart Main Thread if build has changed (updated)
-        if(updateService.getLocalBuild() > localBuild):                  
-            logging.loggingService.logInfo("Restarting following update...")
-            os.execv(sys.executable, ['python3'] + sys.argv)
+        if(RaspApi.buildChanged() == True):                  
+            RaspApi.restart()

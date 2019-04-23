@@ -11,7 +11,7 @@ class swagRemote():
 
     def swagFromURL(url,app,swagger):
         #Replace with URL
-        with urlopen("https://my-landscape-inst-api-uat.azurewebsites.net/swagger/docs/v1") as url:
+        with urlopen("https://petstore.swagger.io/v2/swagger.json") as url:
             data = json.loads(url.read().decode())
 
         for path in data['paths']:

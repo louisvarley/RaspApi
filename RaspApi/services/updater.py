@@ -6,14 +6,14 @@ from RaspApi.utils import logging
 import zipfile36
 import glob, os, shutil
 import io
+import RaspApi
 
 class updateService(Thread):
     """Updates the current version automaticly, run as thread"""
 
-    def __init__(self, workingDir):
+    def __init__(self):
         Thread.__init__(self)
         logging.loggingService.logInfo(" * Starting Auto Updater...")
-        self.workingDir = workingDir
     
     def run(self):
         logging.loggingService.logInfo(" * Running RaspiApi v1.0." + str(self.getLocalBuild()))
@@ -24,7 +24,7 @@ class updateService(Thread):
             sleep(60)   
 
     def getLocalBuild(self):
-        with open(self.workingDir + '/build_number') as f:
+        with open(RaspApi.workingDir + '/build_number') as f:
             thisBuild = f.readline()
         return thisBuild
 
@@ -56,11 +56,11 @@ class updateService(Thread):
         with urlopen(gitArchiveUri) as r:
             with zipfile36.ZipFile(io.BytesIO(r.read()), "r") as z:
                 logging.loggingService.logInfo("Installing Update..." )
-                z.extractall(self.workingDir)
+                z.extractall(RaspApi.workingDir)
      
         #Replace Local files
-        rootSrcDir = self.workingDir + "/RaspApi-master"
-        rootTargetDir = self.workingDir
+        rootSrcDir = RaspApi.workingDir + "/RaspApi-master"
+        rootTargetDir = RaspApi.workingDir
 
         for srcDir, dirs, files in os.walk(rootSrcDir):
             dstDir = srcDir.replace(rootSrcDir, rootTargetDir)
