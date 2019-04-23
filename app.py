@@ -27,7 +27,7 @@ app.config['SWAGGER'] = {
 }
 
 swagger = Swagger(app)
-swagUtils.swagRemote.swagFromURL("",app,swagger)
+swagUtils.swagRemote.swagFromClient("https://petstore.swagger.io/v2/swagger.json","PetShop",app,swagger)
 
 @app.route('/')
 def root():
