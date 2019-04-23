@@ -16,7 +16,7 @@ class updateService(Thread):
         logging.loggingService.logInfo(" * Starting Auto Updater...")
     
     def run(self):
-        logging.loggingService.logInfo(" * Running RaspiApi v1.0." + str(self.getLocalBuild()))
+        logging.loggingService.logInfo(" * Starting RaspiApi v1.0." + str(self.getLocalBuild()))
         
         while 1:
             if self.checkForUpdate():
@@ -75,6 +75,7 @@ class updateService(Thread):
 
         #Remove temp
         if os.path.exists(rootSrcDir):
+            print("Removing " + rootSrcDir)
             shutil.rmtree(rootSrcDir)
         
         logging.loggingService.logInfo("Version 1.0." + str(remoteBuild) + " successfully installed")
