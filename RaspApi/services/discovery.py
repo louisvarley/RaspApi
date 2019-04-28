@@ -21,7 +21,7 @@ class Monitor(Thread):
         while 1:
             data, addr = s.recvfrom(1024) #wait for a packet
             ip= gethostbyname(gethostname()) 
-            if data.startswith(Discovery.MAGIC.encode()) and data[len(Discovery.MAGIC):].decode() != ip+":"+str(RaspApi.port):
+            if data.startswith(Discovery.MAGIC.encode()) and data[len(Discovery.MAGIC):].decode() != ip+":"+str(RaspApi.port)+":"+ str(socket.gethostname()):
                 print("got service announcement from " + data[len(Discovery.MAGIC):].decode())
  
 class Broadcast(Thread):
@@ -37,7 +37,7 @@ class Broadcast(Thread):
         ip= gethostbyname(gethostname()) 
 
         while 1:
-            data = Discovery.MAGIC+ip+":"+str(RaspApi.port)
+            data = Discovery.MAGIC+ip+":"+str(RaspApi.port) + ":" + str(socket.gethostname())
             s.sendto(data.encode(),('<broadcast>', Discovery.PORT))
             sleep(5)       
             

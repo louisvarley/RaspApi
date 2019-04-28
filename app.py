@@ -12,9 +12,9 @@ from RaspApi.utils import logging, swagUtils
 
 from time import sleep
 from os import environ
+
 from urllib.request import urlopen
 from flask import Flask, redirect
-
 from flasgger.utils import swag_from
 from flasgger import Swagger
 
