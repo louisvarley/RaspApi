@@ -6,9 +6,9 @@ import time
 import os
 import sys
 
-import RaspApi
-from RaspApi.services import discovery, updater
-from RaspApi.utils import logging, swagUtils
+import myRaspPI
+from myRaspPI.services import discovery, updater
+from myRaspPI.utils import logging, swagUtils
 
 from time import sleep
 from os import environ
@@ -22,8 +22,8 @@ ssl._create_default_https_context = ssl._create_unverified_context
 app = Flask(__name__)
 
 app.config['SWAGGER'] = {
-  'title': RaspApi.title,
-  'uiversion': RaspApi.uiversion
+  'title': myRaspPI.title,
+  'uiversion': myRaspPI.uiversion
 }
 
 swagger = Swagger(app)
@@ -37,40 +37,40 @@ if __name__ == '__main__':
 
     HOST = environ.get('SERVER_HOST', '0.0.0.0')
     try:
-        RaspApi.port = int(environ.get('SERVER_PORT', RaspApi.port))
+        myRaspPI.port = int(environ.get('SERVER_PORT', myRaspPI.port))
     except ValueError:
-        RaspApi.port = 5555
+        myRaspPI.port = 5555
 
     #Start Update Service Thread
     updateService = updater.updateService()   
     updateService.setName('Updater Service')
     updateService.daemon = True
     updateService.start()
-    RaspApi.updateService = updateService
+    myRaspPI.updateService = updateService
 
     #Start Flask Service Thread
-    flask = threading.Thread(target=app.run,args=(HOST, RaspApi.port))
+    flask = threading.Thread(target=app.run,args=(HOST, myRaspPI.port))
     flask.setName('Flask Server')
     flask.daemon = True
     flask.start()
-    RaspApi.flask = flask
+    myRaspPI.flask = flask
 
     #Start the Discovery Monitor Service
     discoveryMonitor = discovery.Monitor()
     discoveryMonitor.setName('Monitor Service')
     discoveryMonitor.daemon = True
     discoveryMonitor.start()
-    RaspApi.discoveryMonitor = discoveryMonitor
+    myRaspPI.discoveryMonitor = discoveryMonitor
 
     #Start the Discovery Broadcast Service
     discoveryBroadcast = discovery.Broadcast()
     discoveryBroadcast.setName('Broadcast Service')
     discoveryBroadcast.daemon = True
     discoveryBroadcast.start()
-    RaspApi.discoveryBroadcast = discoveryBroadcast
+    myRaspPI.discoveryBroadcast = discoveryBroadcast
 
     while True:
         time.sleep(1)
 
-        if(RaspApi.buildChanged() == True):                  
-            RaspApi.restart()
+        if(myRaspPI.buildChanged() == True):                  
+            myRaspPI.restart()

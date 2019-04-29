@@ -15,8 +15,8 @@
     <WebBrowserUrl>http://localhost</WebBrowserUrl>
     <OutputPath>.</OutputPath>
     <SuppressCollectPythonCloudServiceFiles>true</SuppressCollectPythonCloudServiceFiles>
-    <Name>RaspApi</Name>
-    <RootNamespace>RaspApi</RootNamespace>
+    <Name>myRaspPI</Name>
+    <RootNamespace>myRaspPI</RootNamespace>
     <InterpreterId>MSBuild|env|$(MSBuildProjectFullPath)</InterpreterId>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
@@ -28,66 +28,67 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="RaspApi\RaspApi.py">
+    <Compile Include="myRaspPI\myRaspPI.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="RaspApi\utils\logging.py">
+    <Compile Include="myRaspPI\utils\logging.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="RaspApi\services\updater.py">
+    <Compile Include="myRaspPI\services\updater.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="RaspApi\services\__init__.py">
+    <Compile Include="myRaspPI\services\__init__.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="RaspApi\utils\swagUtils.py">
+    <Compile Include="myRaspPI\utils\swagUtils.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="RaspApi\services\discovery.py">
+    <Compile Include="myRaspPI\services\discovery.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="app.py" />
-    <Compile Include="RaspApi\__init__.py" />
-    <Compile Include="RaspApi\views.py" />
+    <Compile Include="myRaspPI\__init__.py" />
+    <Compile Include="myRaspPI\views.py" />
+    <Compile Include="setup.py" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="RaspApi\" />
-    <Folder Include="RaspApi\utils\" />
-    <Folder Include="RaspApi\services\" />
-    <Folder Include="RaspApi\static\" />
-    <Folder Include="RaspApi\static\content\" />
-    <Folder Include="RaspApi\static\fonts\" />
-    <Folder Include="RaspApi\static\scripts\" />
-    <Folder Include="RaspApi\templates\" />
+    <Folder Include="myRaspPI\" />
+    <Folder Include="myRaspPI\utils\" />
+    <Folder Include="myRaspPI\services\" />
+    <Folder Include="myRaspPI\static\" />
+    <Folder Include="myRaspPI\static\content\" />
+    <Folder Include="myRaspPI\static\fonts\" />
+    <Folder Include="myRaspPI\static\scripts\" />
+    <Folder Include="myRaspPI\templates\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="requirements.txt" />
-    <Content Include="RaspApi\static\content\bootstrap.css" />
-    <Content Include="RaspApi\static\content\bootstrap.min.css" />
-    <Content Include="RaspApi\static\content\site.css" />
-    <Content Include="RaspApi\static\fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="RaspApi\static\fonts\glyphicons-halflings-regular.svg" />
-    <Content Include="RaspApi\static\fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="RaspApi\static\fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="RaspApi\static\scripts\bootstrap.js" />
-    <Content Include="RaspApi\static\scripts\bootstrap.min.js" />
-    <Content Include="RaspApi\static\scripts\jquery-1.10.2.intellisense.js" />
-    <Content Include="RaspApi\static\scripts\jquery-1.10.2.js" />
-    <Content Include="RaspApi\static\scripts\jquery-1.10.2.min.js" />
-    <Content Include="RaspApi\static\scripts\jquery-1.10.2.min.map" />
-    <Content Include="RaspApi\static\scripts\jquery.validate-vsdoc.js" />
-    <Content Include="RaspApi\static\scripts\jquery.validate.js" />
-    <Content Include="RaspApi\static\scripts\jquery.validate.min.js" />
-    <Content Include="RaspApi\static\scripts\jquery.validate.unobtrusive.js" />
-    <Content Include="RaspApi\static\scripts\jquery.validate.unobtrusive.min.js" />
-    <Content Include="RaspApi\static\scripts\modernizr-2.6.2.js" />
-    <Content Include="RaspApi\static\scripts\respond.js" />
-    <Content Include="RaspApi\static\scripts\respond.min.js" />
-    <Content Include="RaspApi\static\scripts\_references.js" />
-    <Content Include="RaspApi\templates\about.html" />
-    <Content Include="RaspApi\templates\contact.html" />
-    <Content Include="RaspApi\templates\index.html" />
-    <Content Include="RaspApi\templates\layout.html" />
+    <Content Include="myRaspPI\static\content\bootstrap.css" />
+    <Content Include="myRaspPI\static\content\bootstrap.min.css" />
+    <Content Include="myRaspPI\static\content\site.css" />
+    <Content Include="myRaspPI\static\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="myRaspPI\static\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="myRaspPI\static\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="myRaspPI\static\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="myRaspPI\static\scripts\bootstrap.js" />
+    <Content Include="myRaspPI\static\scripts\bootstrap.min.js" />
+    <Content Include="myRaspPI\static\scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="myRaspPI\static\scripts\jquery-1.10.2.js" />
+    <Content Include="myRaspPI\static\scripts\jquery-1.10.2.min.js" />
+    <Content Include="myRaspPI\static\scripts\jquery-1.10.2.min.map" />
+    <Content Include="myRaspPI\static\scripts\jquery.validate-vsdoc.js" />
+    <Content Include="myRaspPI\static\scripts\jquery.validate.js" />
+    <Content Include="myRaspPI\static\scripts\jquery.validate.min.js" />
+    <Content Include="myRaspPI\static\scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="myRaspPI\static\scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="myRaspPI\static\scripts\modernizr-2.6.2.js" />
+    <Content Include="myRaspPI\static\scripts\respond.js" />
+    <Content Include="myRaspPI\static\scripts\respond.min.js" />
+    <Content Include="myRaspPI\static\scripts\_references.js" />
+    <Content Include="myRaspPI\templates\about.html" />
+    <Content Include="myRaspPI\templates\contact.html" />
+    <Content Include="myRaspPI\templates\index.html" />
+    <Content Include="myRaspPI\templates\layout.html" />
   </ItemGroup>
   <ItemGroup>
     <Interpreter Include="env\">

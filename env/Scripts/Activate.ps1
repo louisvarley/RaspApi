@@ -27,7 +27,7 @@ function global:deactivate ([switch]$NonDestructive) {
 
 deactivate -nondestructive
 
-$env:VIRTUAL_ENV="\\fishpi\RaspApi\RaspApi\RaspApi\env"
+$env:VIRTUAL_ENV="C:\Users\louis.varley\Documents\GitHub\myRaspPI\myRaspPI\env"
 
 if (! $env:VIRTUAL_ENV_DISABLE_PROMPT) {
     # Set the prompt to include the env name

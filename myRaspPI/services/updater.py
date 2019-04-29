@@ -1,12 +1,12 @@
 from urllib.request import urlopen
 from threading import Thread
 from time import sleep
-from RaspApi.utils import logging
+from myRaspPI.utils import logging
 
 import zipfile36
 import glob, os, shutil
 import io
-import RaspApi
+import myRaspPI
 
 class updateService(Thread):
     """Updates the current version automaticly, run as thread"""
@@ -24,12 +24,12 @@ class updateService(Thread):
             sleep(60)   
 
     def getLocalBuild(self):
-        with open(RaspApi.workingDir + '/build_number') as f:
+        with open(myRaspPI.workingDir + '/build_number') as f:
             thisBuild = f.readline()
         return thisBuild
 
     def getRemoteBuild(self):
-        gitBuildUri = "https://raw.githubusercontent.com/louisvarley/RaspApi/master/build_number"
+        gitBuildUri = "https://raw.githubusercontent.com/louisvarley/myRaspPI/master/build_number"
         with urlopen(gitBuildUri) as url:
             remoteBuild = url.read().decode()
         return remoteBuild
@@ -47,7 +47,7 @@ class updateService(Thread):
 
     def update(self):
 
-        gitArchiveUri = "https://github.com/louisvarley/RaspApi/archive/master.zip"
+        gitArchiveUri = "https://github.com/louisvarley/myRaspPI/archive/master.zip"
         remoteBuild = self.getRemoteBuild()
         
         logging.loggingService.logInfo("Downloading Update..." )
@@ -56,11 +56,11 @@ class updateService(Thread):
         with urlopen(gitArchiveUri) as r:
             with zipfile36.ZipFile(io.BytesIO(r.read()), "r") as z:
                 logging.loggingService.logInfo("Installing Update..." )
-                z.extractall(RaspApi.workingDir)
+                z.extractall(myRaspPI.workingDir)
      
         #Replace Local files
-        rootSrcDir = RaspApi.workingDir + "/RaspApi-master"
-        rootTargetDir = RaspApi.workingDir
+        rootSrcDir = myRaspPI.workingDir + "/myRaspPI-master"
+        rootTargetDir = myRaspPI.workingDir
 
         for srcDir, dirs, files in os.walk(rootSrcDir):
             dstDir = srcDir.replace(rootSrcDir, rootTargetDir)

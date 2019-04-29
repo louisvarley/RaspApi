@@ -1,4 +1,4 @@
-title = "RaspAPI"
+title = "myRaspPI"
 uiversion = 2
 port = 5555
 swagger = None
@@ -7,7 +7,7 @@ build = None
 
 class config(object):
     
-    title = "RaspAPI"
+    title = "myRaspPI"
     uiversion = 2
     port = 5555
     swagger = None

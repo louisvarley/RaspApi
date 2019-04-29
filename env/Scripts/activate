@@ -37,7 +37,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="\\fishpi\RaspApi\RaspApi\RaspApi\env"
+VIRTUAL_ENV="C:\Users\louis.varley\Documents\GitHub\myRaspPI\myRaspPI\env"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"
