@@ -26,7 +26,6 @@ def get_long_description():
     except IOError:
         return None
 
-
 with open('requirements.txt') as f:
     required = f.read().splitlines()
 
@@ -39,16 +38,8 @@ setup(
     version=version,
     packages=find_packages(),
     install_requires=required,
-    data_files=[('share/man/man1', ["doc/scapy.1"])],
     package_data={
         'myRaspPI': ['VERSION'],
-    },
-    # Build starting scripts automatically
-    entry_points={
-        'console_scripts': [
-            'scapy = scapy.main:interact',
-            'UTscapy = scapy.tools.UTscapy:main'
-        ]
     },
     python_requires='>=3',
     # pip > 9 handles all the versioning
