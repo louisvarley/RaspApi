@@ -1,2 +1,1 @@
-include VERSION
-include README.MD
+recursive-include *VERSION*
