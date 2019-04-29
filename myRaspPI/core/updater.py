@@ -1,7 +1,7 @@
 from urllib.request import urlopen
 from threading import Thread
 from time import sleep
-from myRaspPI.core import logging
+from core import logging
 
 import zipfile36
 import glob, os, shutil
@@ -16,27 +16,22 @@ class updateService(Thread):
         logging.loggingService.logInfo(" * Starting Auto Updater...")
     
     def run(self):
-        logging.loggingService.logInfo(" * Starting RaspiApi v1.0." + str(self.getLocalBuild()))
+        logging.loggingService.logInfo(" * Starting RaspiApi v1.0." + str( myRaspPI.config.getVersion()))
         
         while 1:
             if self.checkForUpdate():
                 self.update()
             sleep(60)   
 
-    def getLocalBuild(self):
-        with open(myRaspPI.workingDir + '/build_number') as f:
-            thisBuild = f.readline()
-        return thisBuild
-
     def getRemoteBuild(self):
-        gitBuildUri = "https://raw.githubusercontent.com/louisvarley/myRaspPI/master/build_number"
+        gitBuildUri = "https://raw.githubusercontent.com/louisvarley/myRaspPI/master/VERSION"
         with urlopen(gitBuildUri) as url:
-            remoteBuild = url.read().decode()
+            remoteBuild = int(url.read().decode())
         return remoteBuild
 
     def checkForUpdate(self):
      
-        localBuild = self.getLocalBuild()
+        localBuild = myRaspPI.config.getVersion()
         remoteBuild = self.getRemoteBuild()
 
         if(localBuild < remoteBuild):

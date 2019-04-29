@@ -1,6 +1,8 @@
-import myRaspPI, urllib, ssl, threading, flasgger, time, os, sys
+import myRaspPI
+from myRaspPI import config, core 
+from core import discovery, updater, logging, swagUtils
 
-from myRaspPI.core import discovery, updater, logging, swagUtils
+import urllib, ssl, threading, flasgger, time, os, sys
 from time import sleep
 from os import environ
 from urllib.request import urlopen
@@ -10,12 +12,18 @@ from flasgger import Swagger
 
 def main():
 
+    #App Config Defaults
+    myRaspPI.config.workingDir = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
+    myRaspPI.config.title = "myRaspPI"
+    myRaspPI.config.uiversion = 2
+    myRaspPI.config.port = 5555
+
     ssl._create_default_https_context = ssl._create_unverified_context
     app = Flask(__name__)
 
     app.config['SWAGGER'] = {
-      'title': myRaspPI.title,
-      'uiversion': myRaspPI.uiversion
+      'title': config.title,
+      'uiversion': config.uiversion
     }
 
     swagger = Swagger(app)
@@ -23,9 +31,9 @@ def main():
 
     HOST = environ.get('SERVER_HOST', '0.0.0.0')
     try:
-        myRaspPI.port = int(environ.get('SERVER_PORT', myRaspPI.port))
+        myRaspPI.config.port = int(environ.get('SERVER_PORT', myRaspPI.config.port))
     except ValueError:
-        myRaspPI.port = 5555
+        myRaspPI.config.port = 5555
 
     @app.route('/')
     def root():
@@ -36,34 +44,35 @@ def main():
     updateService.setName('Updater Service')
     updateService.daemon = True
     updateService.start()
-    myRaspPI.updateService = updateService
+    config.updateService = updateService
 
-    #Start Flask Service Thread
-    flask = threading.Thread(target=app.run,args=(HOST, myRaspPI.port))
+    #Start Flask Service Thread, Save to Config
+    flask = threading.Thread(target=app.run,args=(HOST, myRaspPI.config.port))
     flask.setName('Flask Server')
     flask.daemon = True
     flask.start()
-    myRaspPI.flask = flask
+    myRaspPI.config.flask = flask
 
-    #Start the Discovery Monitor Service
+    #Start the Discovery Monitor Service, Save to Config
     discoveryMonitor = discovery.Monitor()
     discoveryMonitor.setName('Monitor Service')
     discoveryMonitor.daemon = True
     discoveryMonitor.start()
-    myRaspPI.discoveryMonitor = discoveryMonitor
+    myRaspPI.config.discoveryMonitor = discoveryMonitor
 
-    #Start the Discovery Broadcast Service
+    #Start the Discovery Broadcast Service, Save to Config
     discoveryBroadcast = discovery.Broadcast()
     discoveryBroadcast.setName('Broadcast Service')
     discoveryBroadcast.daemon = True
     discoveryBroadcast.start()
-    myRaspPI.discoveryBroadcast = discoveryBroadcast
+    myRaspPI.config.discoveryBroadcast = discoveryBroadcast
 
     while True:
         time.sleep(1)
-
-        if(myRaspPI.buildChanged() == True):                  
-            myRaspPI.restart()
+        if(myRaspPI.config.buildChanged() == True):                  
+            myRaspPI.config.restart()
 
 if __name__ == '__main__':
     main()
+
+
