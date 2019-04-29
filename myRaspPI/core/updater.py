@@ -23,18 +23,21 @@ class updateService(Thread):
                 self.update()
             sleep(60)   
 
-    def getRemoteBuild(self):
+    def getRemoteVersion(self):
         gitBuildUri = "https://raw.githubusercontent.com/louisvarley/myRaspPI/master/VERSION"
         with urlopen(gitBuildUri) as url:
-            remoteBuild = int(url.read().decode())
-        return remoteBuild
+            remoteVersion = int(url.read().decode())
+        return remoteVersion
+
+    def getFullRemoteVersion(self):
+        return "v1.0." + str(self.getRemoteVersion())
 
     def checkForUpdate(self):
      
-        localBuild = myRaspPI.config.getVersion()
-        remoteBuild = self.getRemoteBuild()
+        localVersion = myRaspPI.config.getVersion()
+        remoteVersion = self.getRemoteVersion()
 
-        if(localBuild < remoteBuild):
+        if(localVersion < remoteVersion):
             logging.loggingService.logInfo("A new update is available")
             return True
         else:
@@ -42,36 +45,17 @@ class updateService(Thread):
 
     def update(self):
 
+        startVersion = myRaspPI.config.getVersion()
+
         gitArchiveUri = "https://github.com/louisvarley/myRaspPI/archive/master.zip"
-        remoteBuild = self.getRemoteBuild()
-        
+        remoteVersion = self.getRemoteVersion()
+
         logging.loggingService.logInfo("Downloading Update..." )
 
-        #Download ZIP and extract
-        with urlopen(gitArchiveUri) as r:
-            with zipfile36.ZipFile(io.BytesIO(r.read()), "r") as z:
-                logging.loggingService.logInfo("Installing Update..." )
-                z.extractall(myRaspPI.workingDir)
-     
-        #Replace Local files
-        rootSrcDir = myRaspPI.workingDir + "/myRaspPI-master"
-        rootTargetDir = myRaspPI.workingDir
+        os.system("pip3 install --upgrade --no-deps git+git://github.com/louisvarley/myRaspPI@master")
 
-        for srcDir, dirs, files in os.walk(rootSrcDir):
-            dstDir = srcDir.replace(rootSrcDir, rootTargetDir)
-            if not os.path.exists(dstDir):
-                os.mkdir(dstDir)
-            for file_ in files:
-                srcFile = os.path.join(srcDir, file_)
-                dstFile = os.path.join(dstDir, file_)
-                if os.path.exists(dstFile):
-                    os.remove(dstFile)
-                    shutil.move(srcFile, dstDir)
-
-        #Remove temp
-        if os.path.exists(rootSrcDir):
-            print("Removing " + rootSrcDir)
-            shutil.rmtree(rootSrcDir)
-        
-        logging.loggingService.logInfo("Version 1.0." + str(remoteBuild) + " successfully installed")
+        if(startVersion == remoteVersion):
+            logging.loggingService.logInfo(myRaspPI.config.getFullVersion() + " installed successfully")
+        else:
+            logging.loggingService.logInfo(self.getFullRemoteVersion() + " installation failed")
 

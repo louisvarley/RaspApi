@@ -15,10 +15,10 @@ def getVersion():
     with open(workingDir + '/VERSION') as f:
         return int(f.readline())
 
-def hasVersionChanged():
+def getFullVersion():
+    return "v1.0." + str(getVersion())
 
-    if(version == 0):
-        version = getVersion()
+def hasVersionChanged():
 
     if(int(getVersion()) > int(version)):
         return True

@@ -53,7 +53,6 @@
   <ItemGroup>
     <Folder Include="myRaspPI\" />
     <Folder Include="myRaspPI\core\" />
-    <Folder Include="myRaspPI\config\" />
     <Folder Include="myRaspPI\static\" />
     <Folder Include="myRaspPI\static\content\" />
     <Folder Include="myRaspPI\static\fonts\" />

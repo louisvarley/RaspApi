@@ -17,6 +17,7 @@ def main():
     myRaspPI.config.title = "myRaspPI"
     myRaspPI.config.uiversion = 2
     myRaspPI.config.port = 5555
+    myRaspPI.config.version = myRaspPI.config.getVersion()
 
     ssl._create_default_https_context = ssl._create_unverified_context
     app = Flask(__name__)
@@ -44,7 +45,7 @@ def main():
     updateService.setName('Updater Service')
     updateService.daemon = True
     updateService.start()
-    config.updateService = updateService
+    myRaspPI.config.updateService = updateService
 
     #Start Flask Service Thread, Save to Config
     flask = threading.Thread(target=app.run,args=(HOST, myRaspPI.config.port))
@@ -69,7 +70,7 @@ def main():
 
     while True:
         time.sleep(1)
-        if(myRaspPI.config.buildChanged() == True):                  
+        if(myRaspPI.config.hasVersionChanged() == True):                  
             myRaspPI.config.restart()
 
 if __name__ == '__main__':
