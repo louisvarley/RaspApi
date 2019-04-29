@@ -30,15 +30,18 @@ def get_long_description():
 with open('requirements.txt') as f:
     required = f.read().splitlines()
 
+with open('build_number') as f:
+    version = 'v1.0.' + f.readline()
+
 # https://packaging.python.org/guides/distributing-packages-using-setuptools/
 setup(
     name='myRaspPI',
-    version=__import__('scapy').VERSION,
+    version=version,
     packages=find_packages(),
     install_requires=required,
     data_files=[('share/man/man1', ["doc/scapy.1"])],
     package_data={
-        'scapy': ['VERSION'],
+        'myRaspPI': ['VERSION'],
     },
     # Build starting scripts automatically
     entry_points={
@@ -47,54 +50,23 @@ setup(
             'UTscapy = scapy.tools.UTscapy:main'
         ]
     },
-    python_requires='>=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, <4',
+    python_requires='>=3',
     # pip > 9 handles all the versioning
-    extras_require={
-        'basic': ["ipython"],
-        'complete': [
-            'ipython',
-            'pyx',
-            'cryptography>=2.0',
-            'matplotlib'
-        ]
-    },
-    # We use __file__ in scapy/__init__.py, therefore Scapy isn't zip safe
     zip_safe=False,
 
     # Metadata
-    author='Philippe BIONDI',
-    author_email='phil(at)secdev.org',
-    maintainer='Pierre LALET, Gabriel POTTER, Guillaume VALADON',
-    description='Scapy: interactive packet manipulation tool',
+    author='Louis Varley',
+    author_email='louisvarley@googlemail.com',
+    maintainer='Louis Varley',
+    description='Raspberry PI Distributed API Controllers for IOT',
     long_description=get_long_description(),
     long_description_content_type='text/markdown',
     license='GPLv2',
     url='https://scapy.net',
     project_urls={
-        'Documentation': 'https://scapy.readthedocs.io',
-        'Source Code': 'https://github.com/secdev/scapy/',
+        'Source Code': 'https://github.com/louisvarley/myRaspPI',
     },
-    download_url='https://github.com/secdev/scapy/tarball/master',
-    keywords=["network"],
-    classifiers=[
-        "Development Status :: 5 - Production/Stable",
-        "Environment :: Console",
-        "Intended Audience :: Developers",
-        "Intended Audience :: Information Technology",
-        "Intended Audience :: Science/Research",
-        "Intended Audience :: System Administrators",
-        "Intended Audience :: Telecommunications Industry",
-        "License :: OSI Approved :: GNU General Public License v2 (GPLv2)",
-        "Programming Language :: Python :: 2",
-        "Programming Language :: Python :: 2.7",
-        "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.4",
-        "Programming Language :: Python :: 3.5",
-        "Programming Language :: Python :: 3.6",
-        "Programming Language :: Python :: 3.7",
-        "Topic :: Security",
-        "Topic :: System :: Networking",
-        "Topic :: System :: Networking :: Monitoring",
-    ]
+    download_url='https://github.com/louisvarley/myRaspPItarball/master',
+    keywords=["IOT"]
 )
 
