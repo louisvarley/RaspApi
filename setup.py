@@ -29,7 +29,7 @@ def get_long_description():
 with open('requirements.txt') as f:
     required = f.read().splitlines()
 
-with open('VERSION') as f:
+with open('myRaspPI/VERSION') as f:
     version = 'v1.0.' + f.readline()
 
 # https://packaging.python.org/guides/distributing-packages-using-setuptools/
