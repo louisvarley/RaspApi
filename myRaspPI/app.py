@@ -1,6 +1,6 @@
 import myRaspPI
 from myRaspPI import config, core 
-from core import discovery, updater, logging, swagUtils
+from myRaspPI.core import discovery, updater, logging, swagUtils
 
 import urllib, ssl, threading, flasgger, time, os, sys
 from time import sleep
