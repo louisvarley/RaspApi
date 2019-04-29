@@ -7,7 +7,7 @@
     <ProjectGuid>e1073813-e087-4a2a-b4f8-c5eb1f0abaa4</ProjectGuid>
     <ProjectHome>.</ProjectHome>
     <ProjectTypeGuids>{789894c7-04a9-4a11-a6b5-3f4435165112};{1b580a1a-fdb3-4b32-83e1-6407eb2722e6};{349c5851-65df-11da-9384-00065b846f21};{888888a0-9f3d-457c-b088-3a5042f75d52}</ProjectTypeGuids>
-    <StartupFile>app.py</StartupFile>
+    <StartupFile>myRaspPI\bin\app.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -31,30 +31,29 @@
     <Compile Include="myRaspPI\myRaspPI.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="myRaspPI\utils\logging.py">
+    <Compile Include="myRaspPI\core\logging.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="myRaspPI\services\updater.py">
+    <Compile Include="myRaspPI\core\updater.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="myRaspPI\services\__init__.py">
+    <Compile Include="myRaspPI\core\__init__.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="myRaspPI\utils\swagUtils.py">
+    <Compile Include="myRaspPI\core\swagUtils.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="myRaspPI\services\discovery.py">
+    <Compile Include="myRaspPI\core\discovery.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="app.py" />
+    <Compile Include="myRaspPI\bin\app.py" />
     <Compile Include="myRaspPI\__init__.py" />
-    <Compile Include="myRaspPI\views.py" />
     <Compile Include="setup.py" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="myRaspPI\" />
-    <Folder Include="myRaspPI\utils\" />
-    <Folder Include="myRaspPI\services\" />
+    <Folder Include="myRaspPI\core\" />
+    <Folder Include="myRaspPI\bin\" />
     <Folder Include="myRaspPI\static\" />
     <Folder Include="myRaspPI\static\content\" />
     <Folder Include="myRaspPI\static\fonts\" />
@@ -62,6 +61,7 @@
     <Folder Include="myRaspPI\templates\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="README.md" />
     <Content Include="requirements.txt" />
     <Content Include="myRaspPI\static\content\bootstrap.css" />
     <Content Include="myRaspPI\static\content\bootstrap.min.css" />

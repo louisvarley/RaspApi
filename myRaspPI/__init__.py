@@ -2,7 +2,7 @@ import os
 import sys
 import myRaspPI
 
-from myRaspPI.utils import logging
+from myRaspPI.core import logging
 from flask import Flask
 app = Flask(__name__)
 

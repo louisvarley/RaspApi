@@ -41,7 +41,11 @@ setup(
     package_data={
         'myRaspPI': ['VERSION'],
     },
-    scripts=['myRaspPI'],
+    entry_points = {
+            'console_scripts': [
+                'myRaspPI = package.module:main',                  
+            ],              
+        },
     python_requires='>=3',
     # pip > 9 handles all the versioning
     zip_safe=False,
