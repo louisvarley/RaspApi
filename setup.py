@@ -43,7 +43,7 @@ setup(
     },
     entry_points = {
             'console_scripts': [
-                'myRaspPI = package.module:main',                  
+                'myRaspPI = myRaspPI.myRaspPI:main',                  
             ],              
         },
     python_requires='>=3',
