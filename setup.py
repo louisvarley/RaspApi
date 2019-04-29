@@ -38,7 +38,6 @@ setup(
     version=version,
     packages=find_packages(),
     install_requires=required,
-    package_data={'myRaspPI': ['VERSION']},
     entry_points = {
             'console_scripts': [
                 'myRaspPI = myRaspPI.app:main',                  
