@@ -13,10 +13,9 @@ class updateService(Thread):
 
     def __init__(self):
         Thread.__init__(self)
-        logging.loggingService.logInfo(" * Starting Auto Updater...")
+        logging.loggingService.logInfo(" * Starting Auto Updater Service...")
     
     def run(self):
-        logging.loggingService.logInfo(" * Starting RaspiApi v1.0." + str( myRaspPI.config.getVersion()))
         
         while 1:
             if self.checkForUpdate():

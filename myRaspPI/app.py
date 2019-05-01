@@ -68,6 +68,8 @@ def main():
     discoveryBroadcast.start()
     myRaspPI.config.discoveryBroadcast = discoveryBroadcast
 
+    logging.loggingService.logInfo(" * Starting RaspiApi v1.0." + str( myRaspPI.config.getVersion()))
+
     while True:
         time.sleep(1)
         if(myRaspPI.config.hasVersionChanged() == True):                  
