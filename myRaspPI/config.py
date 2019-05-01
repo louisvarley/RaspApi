@@ -1,4 +1,5 @@
 import os
+from __version__ import version
 
 title = ""
 uiversion = 2
@@ -13,8 +14,8 @@ flask = None
 
 #Get The Version as of NOW
 def getVersion():
-    with open(os.path.join(workingDir, 'myRaspPI', 'VERSION')) as f:
-        return int(f.readline())
+    with open(os.path.join(workingDir, 'myRaspPI', '__version__.py')) as f:
+        return f.readline().replace('version=','')
 
 def getFullVersion():
     return "v1.0." + str(getVersion())

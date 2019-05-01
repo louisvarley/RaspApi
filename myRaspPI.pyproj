@@ -48,6 +48,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="myRaspPI\__init__.py" />
+    <Compile Include="myRaspPI\__version__.py" />
     <Compile Include="setup.py" />
   </ItemGroup>
   <ItemGroup>
@@ -60,10 +61,6 @@
     <Folder Include="myRaspPI\templates\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="MANIFEST.in">
-      <SubType>Code</SubType>
-    </Content>
-    <Content Include="myRaspPI\VERSION" />
     <Content Include="README.md" />
     <Content Include="requirements.txt" />
     <Content Include="myRaspPI\static\content\bootstrap.css" />

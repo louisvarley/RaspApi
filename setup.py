@@ -12,7 +12,7 @@ except:
     raise ImportError("setuptools is required!")
 import io
 import os
-
+import re
 
 def get_long_description():
     """Extract description from README.md, for PyPI's usage"""
@@ -29,8 +29,8 @@ def get_long_description():
 with open('requirements.txt') as f:
     required = f.read().splitlines()
 
-with open('myRaspPI/VERSION') as f:
-    version = 'v1.0.' + f.readline()
+with open('myRaspPI/__version__.py') as f:
+    version = 'v1.0.' + f.readline().replace('version=','')
 
 # https://packaging.python.org/guides/distributing-packages-using-setuptools/
 setup(
@@ -46,7 +46,6 @@ setup(
     python_requires='>=3',
     # pip > 9 handles all the versioning
     zip_safe=False,
-    data_files = [('myRaspPI', ['myRaspPI/VERSION'])],
     # Metadata
     author='Louis Varley',
     author_email='louisvarley@googlemail.com',
