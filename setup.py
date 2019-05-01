@@ -30,7 +30,7 @@ with open('requirements.txt') as f:
     required = f.read().splitlines()
 
 with open('myRaspPI/__version__.py') as f:
-    version = 'v1.0.' + f.readline().replace('version=','')
+    version = 'v1.1.' + f.readline().replace('version=','')
 
 # https://packaging.python.org/guides/distributing-packages-using-setuptools/
 setup(
