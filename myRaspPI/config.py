@@ -1,4 +1,5 @@
 import os
+from myRaspPI.core import logging
 
 title = ""
 uiversion = 2
