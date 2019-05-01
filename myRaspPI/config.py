@@ -13,7 +13,7 @@ flask = None
 
 #Get The Version as of NOW
 def getVersion():
-    with open(os.path.join(workingDir, 'myRaspPI', 'version.py')) as f:
+    with open(os.path.join(workingDir, 'myRaspPI', '__version__.py')) as f:
         return int(f.readline().replace('version=',''))
 
 def getFullVersion():
