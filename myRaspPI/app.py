@@ -55,14 +55,14 @@ def main():
     myRaspPI.config.flask = flask
 
     #Start the Discovery Monitor Service, Save to Config
-    discoveryMonitor = discovery.Monitor()
+    discoveryMonitor = discovery.DiscoveryMonitor()
     discoveryMonitor.setName('Monitor Service')
     discoveryMonitor.daemon = True
     discoveryMonitor.start()
     myRaspPI.config.discoveryMonitor = discoveryMonitor
 
     #Start the Discovery Broadcast Service, Save to Config
-    discoveryBroadcast = discovery.Broadcast()
+    discoveryBroadcast = discovery.DiscoveryBroadcast()
     discoveryBroadcast.setName('Broadcast Service')
     discoveryBroadcast.daemon = True
     discoveryBroadcast.start()
