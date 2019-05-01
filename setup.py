@@ -46,7 +46,7 @@ setup(
     python_requires='>=3',
     # pip > 9 handles all the versioning
     zip_safe=False,
-
+    data_files = [('myRaspPI', ['myRaspPI/VERSION'])],
     # Metadata
     author='Louis Varley',
     author_email='louisvarley@googlemail.com',
