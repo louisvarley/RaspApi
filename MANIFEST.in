@@ -1,1 +1,3 @@
-recursive-include *VERSION*
+recursive-include VERSION
+recursive-include /myraspPI/VERSION
+recursive-include myraspPI/VERSION

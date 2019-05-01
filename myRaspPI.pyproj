@@ -60,7 +60,10 @@
     <Folder Include="myRaspPI\templates\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="VERSION" />
+    <Content Include="MANIFEST.in">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="myRaspPI\VERSION" />
     <Content Include="README.md" />
     <Content Include="requirements.txt" />
     <Content Include="myRaspPI\static\content\bootstrap.css" />
