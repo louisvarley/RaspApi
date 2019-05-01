@@ -24,9 +24,10 @@ class updateService(Thread):
             sleep(60)   
 
     def getRemoteVersion(self):
-        gitBuildUri = "https://raw.githubusercontent.com/louisvarley/myRaspPI/master/VERSION"
+        gitBuildUri = "https://raw.githubusercontent.com/louisvarley/myRaspPI/master/myRaspPI/__version__.py"
         with urlopen(gitBuildUri) as url:
-            remoteVersion = int(url.read().decode())
+            remoteVersion = url.read().decode()
+        remoteVersion = int(remoteVersion.replace('version=',''))
         return remoteVersion
 
     def getFullRemoteVersion(self):
@@ -46,8 +47,6 @@ class updateService(Thread):
     def update(self):
 
         startVersion = myRaspPI.config.getVersion()
-
-        gitArchiveUri = "https://github.com/louisvarley/myRaspPI/archive/master.zip"
         remoteVersion = self.getRemoteVersion()
 
         logging.loggingService.logInfo("Downloading Update..." )
