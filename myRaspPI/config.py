@@ -12,6 +12,8 @@ updater = None
 discoveryMonitor = None
 discoveryBroadcast = None
 flask = None
+hostName = ""
+app = None
 
 #Get The Version as of NOW
 def getVersion():

@@ -4,13 +4,14 @@ from socket import socket, AF_INET, SOCK_DGRAM, SOL_SOCKET, SO_BROADCAST, gethos
 from myRaspPI.core import logging
 import myRaspPI
 import platform
+
 from urllib.request import urlopen
 
 class Discovery():
     magicPrefix = "myRaspPI"
     magicPort = 50000
     magicIP = gethostbyname(gethostname()) 
-    magicClientString = magicPrefix + magicIP+":"+str(myRaspPI.config.port)+":"+ str(platform.uname()[1])
+    magicClientString = magicPrefix + magicIP+":"+str(myRaspPI.config.port)+":"+ myRaspPI.config.hostName
 
 class Client():
 
@@ -18,7 +19,8 @@ class Client():
         self.hostName = hostName
         self.ipAddress = ipAddress
         self.port = port
-        self.apiSpec = "http://" + self.ipAddress + ":" + self.port + "/apispec_1.json"
+        self.loaded = False
+        self.apiSpec = "http://" + self.ipAddress + ":" + self.port + "/spec.json"
 
 class Clients():
 
@@ -36,7 +38,6 @@ class Clients():
         else:
             return False
 
-
     def isClient(self,ipAddress):
         if ipAddress in self.clientList:
             return True
@@ -44,12 +45,17 @@ class Clients():
             return False
 
     def isClientOnline(self,ipAddress):
-         if ipAddress in self.clientList:
-             if(urlopen(self.clientList[ipAddress].apiSpec).status_code == 200):
-                 return True
-             else:
-                 return False
-         else:
+        if ipAddress in self.clientList:
+            try:
+                resp = urlopen(self.clientList[ipAddress].apiSpec)
+            except urllib.HTTPError as e:
+                return False
+            except urllib.URLError as e:
+                return False
+            else:
+                # 200
+                return True
+        else:
             return False
 
     def listClients():
@@ -74,13 +80,11 @@ class DiscoveryMonitor(Thread):
             
             #Check if is discovery magic string and isnt this client
             if data.decode().startswith(Discovery.magicPrefix) and data.decode() != Discovery.magicClientString:
-                print("Client Detected...")
 
                 clientString = data[len(Discovery.magicPrefix):].decode()
 
                 #Isnt already added to the clients list
                 if self.clients.isClient(self.clients.clientFromMagic(clientString).ipAddress) == False:
-                    print("New Client")
                     client = self.clients.clientFromMagic(clientString)
                     self.clients.newClient(client)
                     print("New Client " + client.hostName)
