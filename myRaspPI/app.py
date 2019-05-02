@@ -1,4 +1,5 @@
 import myRaspPI
+import signal
 from myRaspPI import config, core 
 from myRaspPI.core import discovery, updater, logging, swagUtils
 
@@ -103,7 +104,7 @@ def main():
                 if(client.loaded == False):
                     client.loaded = True
 
-                    os.kill(flask.ident)
+                    os.kill(flask.ident,signal.SIGKILL)
 
                     try:
                         swagUtils.swagRemote.swagFromClient("https://petstore.swagger.io/v2/swagger.json",client.hostName,app,swagger)
