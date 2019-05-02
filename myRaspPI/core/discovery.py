@@ -11,7 +11,7 @@ class Discovery():
     magicPrefix = "myRaspPI"
     magicPort = 50000
     magicIP = gethostbyname(gethostname()) 
-    magicClientString = magicPrefix + magicIP+":"+str(myRaspPI.config.port)+":"+ myRaspPI.config.hostName
+    magicClientString = magicPrefix + magicIP+":"+str(myRaspPI.config.port)+":"+ str(platform.uname()[1])
 
 class Client():
 
@@ -30,9 +30,9 @@ class Clients():
     def newClient(self,client):
         self.clientList.update({client.ipAddress:client})
 
-    def clientFromMagic(self,MAGIC):
-        if(":" in MAGIC):
-            cData = MAGIC.split(":")
+    def clientFromClientString(self,clientString):
+        if(":" in clientString):
+            cData = clientString.split(":")
             i = Client(cData[0],cData[1],cData[2])
             return i
         else:
@@ -80,16 +80,10 @@ class DiscoveryMonitor(Thread):
             
             #Check if is discovery magic string and isnt this client
             if data.decode().startswith(Discovery.magicPrefix) and data.decode() != Discovery.magicClientString:
-
                 clientString = data[len(Discovery.magicPrefix):].decode()
-
                 #Isnt already added to the clients list
-                if self.clients.isClient(self.clients.clientFromMagic(clientString).ipAddress) == False:
-                    client = self.clients.clientFromMagic(clientString)
-                    client.apiSpec = "https://my-landscape-inst-api-uat.azurewebsites.net/swagger/docs/v1"
-                    client.hostName = "streamPI"
-                    client.port = "443"
-                    client.ipAddress = "10.25.0.179"
+                if self.clients.isClient(self.clients.clientFromClientString(clientString).ipAddress) == False:
+                    client = self.clients.clientFromClientString(clientString)                 
                     self.clients.newClient(client)
                     print("New Client " + client.hostName)
  

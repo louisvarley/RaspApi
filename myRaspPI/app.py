@@ -85,7 +85,9 @@ def main():
     myRaspPI.config.host = environ.get('SERVER_HOST', '0.0.0.0')
 
     logging.loggingService.logInfo(" * Starting RaspiApi v1.0." + str( myRaspPI.config.getVersion()))
-    swagUtils.swagRemote.swagFromClient("https://petstore.swagger.io/v2/swagger.json","test",app,swagger)
+
+
+    swagUtils.swagRemote.defaultRoutes(app,swagger)
 
     flask = threading.Thread(target=app.run,args=(myRaspPI.config.host, myRaspPI.config.port))
     flask.setName('Flask Server')
@@ -106,7 +108,7 @@ def main():
                     myRaspPI.config.flask._reset_internal_locks(True)
 
                     #try:
-                    swagUtils.swagRemote.swagFromClient("https://my-landscape-inst-api-uat.azurewebsites.net/swagger/docs/v1",client.hostName,app,swagger)
+                    swagUtils.swagRemote.swagFromClient(client.apiSpec,client.hostName,app,swagger)
                        # time.sleep(0)
                     #except:
                         #time.sleep(0)
