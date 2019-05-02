@@ -103,16 +103,15 @@ def main():
             if(myRaspPI.config.discoveryMonitor.clients.isClientOnline(client.ipAddress)):
                 if(client.loaded == False):
                     client.loaded = True
+                    myRaspPI.config.flask._reset_internal_locks(True)
 
-                    os.kill(flask.ident,signal.SIGKILL)
+                    #try:
+                    swagUtils.swagRemote.swagFromClient("https://my-landscape-inst-api-uat.azurewebsites.net/swagger/docs/v1",client.hostName,app,swagger)
+                       # time.sleep(0)
+                    #except:
+                        #time.sleep(0)
 
-                    try:
-                        swagUtils.swagRemote.swagFromClient("https://petstore.swagger.io/v2/swagger.json",client.hostName,app,swagger)
-                        time.sleep(0)
-                    except:
-                        time.sleep(0)
-
-                    logging.loggingService.logInfo(" * Starting RaspiApi v1.0." + str( myRaspPI.config.getVersion()))
+                    logging.loggingService.logInfo(" * Restarting RaspiApi v1.0." + str( myRaspPI.config.getVersion()))
                     flask = threading.Thread(target=app.run,args=(myRaspPI.config.host, myRaspPI.config.port))
                     flask.setName('Flask Server')
                     flask.daemon = True

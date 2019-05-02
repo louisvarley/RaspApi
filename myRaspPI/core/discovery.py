@@ -86,6 +86,10 @@ class DiscoveryMonitor(Thread):
                 #Isnt already added to the clients list
                 if self.clients.isClient(self.clients.clientFromMagic(clientString).ipAddress) == False:
                     client = self.clients.clientFromMagic(clientString)
+                    client.apiSpec = "https://my-landscape-inst-api-uat.azurewebsites.net/swagger/docs/v1"
+                    client.hostName = "streamPI"
+                    client.port = "443"
+                    client.ipAddress = "10.25.0.179"
                     self.clients.newClient(client)
                     print("New Client " + client.hostName)
  
