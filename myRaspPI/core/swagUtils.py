@@ -14,7 +14,7 @@ class swagRemote():
 
     def defaultRoutes(app,swagger):
         name = str(platform.uname()[1])
-        route = '/' + name + "/getClientInfo"
+        route = '/getClientInfo'
 
         specs_dict = {
           "parameters": [
@@ -85,7 +85,9 @@ def routeClientInfo():
           
 
         for path in data['paths']:
+          
             route = '/' + name + str(path)
+            print("Loading... @" + name + ' ' + route)
             exec("""
 @app.route('""" + str(route) + """')
 @swag_from(""" + str(data['paths'][path]) + """)
