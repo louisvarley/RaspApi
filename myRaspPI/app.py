@@ -53,12 +53,7 @@ def main():
     discoveryBroadcast.start()
     myRaspPI.config.discoveryBroadcast = discoveryBroadcast
 
- 
-
-def web():
-
     app = Flask(__name__)
-
 
     app.config['SWAGGER'] = {
         'uiversion': 2,
@@ -123,9 +118,9 @@ def web():
                     flask.start()
                     myRaspPI.config.flask = flask
 
-        time.sleep(1)
+        time.sleep(1) 
+
 
 if __name__ == '__main__':
     main()
-    web()
 
