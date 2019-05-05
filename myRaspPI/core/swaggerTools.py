@@ -71,7 +71,7 @@ def routeClientInfo():
     This is using docstring for specifications
     ---
     tags:
-      - """ + name + """
+      - """ + name.upper() + """
     \"\"\"
     return "No"
         """)  
