@@ -16,20 +16,19 @@ from multiprocessing import Process, Queue
 
 def main():
 
+    #//try:
+     #  myRaspPI.config.port = int(environ.get('SERVER_PORT', myRaspPI.config.port))
+    #except ValueError:
+    myRaspPI.config.port = 5555
+
     #App Config Defaults
     myRaspPI.config.workingDir = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
     myRaspPI.config.title = "myRaspPI"
     myRaspPI.config.uiversion = 2
-    myRaspPI.config.port = 5555
     myRaspPI.config.version = myRaspPI.config.getVersion()
     myRaspPI.config.hostName = str(platform.uname()[1])
 
     ssl._create_default_https_context = ssl._create_unverified_context
-
-    try:
-        myRaspPI.config.port = int(environ.get('SERVER_PORT', myRaspPI.config.port))
-    except ValueError:
-        myRaspPI.config.port = 5555
 
     #Start Update Service Thread
     updateService = updater.updateService()   
@@ -39,7 +38,6 @@ def main():
     myRaspPI.config.updateService = updateService
 
     #Start Flask Service Thread, Save to Config
-
 
     #Start the Discovery Monitor Service, Save to Config
     discoveryMonitor = discovery.DiscoveryMonitor()
@@ -120,7 +118,7 @@ def main():
                     # time.sleep(0)
                     #except:
                         #time.sleep(0)
-
+                    flask._reset_internal_locks(True)
                     logging.loggingService.logInfo(" * Restarting RaspiApi v1.0." + str( myRaspPI.config.getVersion()))
                     flask = threading.Thread(target=app.run,args=(myRaspPI.config.host, myRaspPI.config.port))
                     flask.setName('Flask Server')

@@ -13,7 +13,7 @@ from myRaspPI import config
 
 def defaultRoutes(app,swagger):
     name = str(platform.uname()[1])
-    route = '/getClientInfo'
+    route = '/' + name + '/getClientInfo'
 
     specs_dict = {
         "parameters": [
@@ -87,10 +87,13 @@ def swagFromClient(jsonUrl,name,app,swagger):
           
 
     for path in data['paths']:
-        try:  
+        try:
+            
             route = '/' + name + "/" + str(path).split("/")[-1]
-            print("Loading... @" + name + ' ' + route)
-            exec("""
+            if(name in data['paths'][path]['get']['tags']):
+
+                print("Loading... @" + name + ' ' + route)
+                exec("""
 @app.route('""" + str(route) + """')
 @swag_from(""" + str(data['paths'][path]) + """)
 def """ + str(path).replace("/","").replace("{","").replace("}","").replace(")","").replace("(","") + """():
