@@ -1,7 +1,8 @@
 import myRaspPI
 import signal
+
 from myRaspPI import config, core 
-from myRaspPI.core import discovery, updater, logging, swagUtils
+from myRaspPI.core import discovery, updater, logging, swaggerTools
 
 import urllib, ssl, threading, flasgger, time, os, sys, subprocess, platform, os
 
@@ -83,20 +84,20 @@ def main():
     swagger = Swagger(app)
 
     myRaspPI.config.host = environ.get('SERVER_HOST', '0.0.0.0')
-
     myRaspPI.config.host = '0.0.0.0'
 
-    logging.loggingService.logInfo(" * Starting RaspiApi v1.0." + str( myRaspPI.config.getVersion()))
+    logging.loggingService.logInfo(" * Starting Flasgger [" + myRaspPI.config.host + ":" + str(myRaspPI.config.port) + "]")
 
-
-    swagUtils.swagRemote.defaultRoutes(app,swagger)
+    swaggerTools.defaultRoutes(app,swagger)
 
     flask = threading.Thread(target=app.run,args=(myRaspPI.config.host, myRaspPI.config.port))
     flask.setName('Flask Server')
     flask.daemon = True
     flask.start()
+
     myRaspPI.config.flask = flask
 
+    logging.loggingService.logInfo(" * Starting Clusgger v1.0." + str( myRaspPI.config.getVersion()))
 
     while True:
         
@@ -107,14 +108,16 @@ def main():
             if(myRaspPI.config.discoveryMonitor.clients.isClientOnline(client.ipAddress)):
                 if(client.loaded == False):
 
-                    logging.loggingService.logInfo("Swagging From Client : " + str(client.hostName))
+                    logging.loggingService.logInfo("Found a new client : " + str(client.hostName)+':'+str(client.port))
 
                     client.loaded = True
                     myRaspPI.config.flask._reset_internal_locks(True)
 
                     #try:
-                    swagUtils.swagRemote.swagFromClient('https://my-landscape-inst-api-uat.azurewebsites.net/swagger/docs/v1',client.hostName,app,swagger)
-                       # time.sleep(0)
+                    swaggerTools.swagFromClient(client.apiSpec,client.hostName,app,swagger)
+                   
+                    logging.loggingService.logInfo("client has been loaded")
+                    # time.sleep(0)
                     #except:
                         #time.sleep(0)
 

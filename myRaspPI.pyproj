@@ -37,7 +37,7 @@
     <Compile Include="myRaspPI\core\__init__.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="myRaspPI\core\swagUtils.py">
+    <Compile Include="myRaspPI\core\swaggerTools.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="myRaspPI\core\discovery.py">

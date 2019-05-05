@@ -76,7 +76,6 @@ class DiscoveryMonitor(Thread):
                 #Isnt already added to the clients list
                 if self.clients.isClient(self.clients.clientFromClientString(clientString).ipAddress) == False:
                     client = self.clients.clientFromClientString(clientString)                 
-                    logging.loggingService.logInfo("Found a new client : " + str(client.hostName))
                     self.clients.newClient(client)
                     
  
