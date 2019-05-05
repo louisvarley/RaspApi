@@ -46,15 +46,7 @@ class Clients():
 
     def isClientOnline(self,ipAddress):
         if ipAddress in self.clientList:
-            try:
-                resp = urlopen(self.clientList[ipAddress].apiSpec)
-            except urllib.HTTPError as e:
-                return False
-            except urllib.URLError as e:
-                return False
-            else:
-                # 200
-                return True
+            return True
         else:
             return False
 
@@ -84,8 +76,9 @@ class DiscoveryMonitor(Thread):
                 #Isnt already added to the clients list
                 if self.clients.isClient(self.clients.clientFromClientString(clientString).ipAddress) == False:
                     client = self.clients.clientFromClientString(clientString)                 
+                    logging.loggingService.logInfo("Found a new client : " + str(client.hostName))
                     self.clients.newClient(client)
-                    print("New Client " + client.hostName)
+                    
  
 class DiscoveryBroadcast(Thread):
 

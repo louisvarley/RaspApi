@@ -84,6 +84,8 @@ def main():
 
     myRaspPI.config.host = environ.get('SERVER_HOST', '0.0.0.0')
 
+    myRaspPI.config.host = '0.0.0.0'
+
     logging.loggingService.logInfo(" * Starting RaspiApi v1.0." + str( myRaspPI.config.getVersion()))
 
 
@@ -104,11 +106,14 @@ def main():
         for ipAddress, client in myRaspPI.config.discoveryMonitor.clients.clientList.items():
             if(myRaspPI.config.discoveryMonitor.clients.isClientOnline(client.ipAddress)):
                 if(client.loaded == False):
+
+                    logging.loggingService.logInfo("Swagging From Client : " + str(client.hostName))
+
                     client.loaded = True
                     myRaspPI.config.flask._reset_internal_locks(True)
 
                     #try:
-                    swagUtils.swagRemote.swagFromClient(client.apiSpec,client.hostName,app,swagger)
+                    swagUtils.swagRemote.swagFromClient('https://my-landscape-inst-api-uat.azurewebsites.net/swagger/docs/v1',client.hostName,app,swagger)
                        # time.sleep(0)
                     #except:
                         #time.sleep(0)
