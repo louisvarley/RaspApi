@@ -113,19 +113,9 @@ def main():
 
                     #try:
                     swaggerTools.swagFromClient(client.apiSpec,client.hostName,app,swagger)
-                   
                     logging.loggingService.logInfo("client has been loaded")
-                    # time.sleep(0)
-                    #except:
-                        #time.sleep(0)
                     flask._reset_internal_locks(True)
-                    logging.loggingService.logInfo(" * Restarting RaspiApi 1.0." + str( myRaspPI.config.getVersion()))
-                    flask = threading.Thread(target=app.run,args=(myRaspPI.config.host, myRaspPI.config.port))
-                    flask.setName('Flask Server')
-                    flask.daemon = True
-                    flask.start()
-                    myRaspPI.config.flask = flask
-
+                    
         time.sleep(1) 
 
 
