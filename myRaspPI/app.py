@@ -106,14 +106,13 @@ def main():
             if(myRaspPI.config.discoveryMonitor.clients.isClientOnline(client.ipAddress)):
                 if(client.loaded == False):
 
-                    logging.loggingService.logInfo("Found a new client : " + str(client.hostName)+':'+str(client.port))
+                    logging.loggingService.logInfo("   Found a new client : " + str(client.hostName)+':'+str(client.port))
 
                     client.loaded = True
                     myRaspPI.config.flask._reset_internal_locks(True)
 
                     #try:
                     swaggerTools.swagFromClient(client.apiSpec,client.hostName,app,swagger)
-                    logging.loggingService.logInfo("client has been loaded")
                     flask._reset_internal_locks(True)
                     
         time.sleep(1) 

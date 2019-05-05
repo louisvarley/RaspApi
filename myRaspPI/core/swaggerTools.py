@@ -83,7 +83,7 @@ def swagFromClient(jsonUrl,name,app,swagger):
         with urlopen(jsonUrl) as url:
             data = json.loads(url.read().decode())
     except: 
-        logging.loggingService.logInfo("Unable to swag from " + jsonUrl)
+        logging.loggingService.logInfo("   Unable to swag from " + jsonUrl)
           
 
     for path in data['paths']:
@@ -92,7 +92,7 @@ def swagFromClient(jsonUrl,name,app,swagger):
             route = '/' + name + "/" + str(path).split("/")[-1]
             if(name in data['paths'][path]['get']['tags']):
 
-                print("Loading... @" + name + ' ' + route)
+                logging.loggingService.logInfo("   Loading... @" + name + ' ' + route)
                 exec("""
 @app.route('""" + str(route) + """')
 @swag_from(""" + str(data['paths'][path]) + """)
@@ -106,6 +106,6 @@ def """ + str(path).replace("/","").replace("{","").replace("}","").replace(")",
     return "No"
         """)  
         except:
-            logging.loggingService.logInfo("Error while creating endpoint for " + route)
+            logging.loggingService.logInfo("    Error while creating endpoint for " + route)
             logging.loggingService.logInfo(sys.exc_info()[0])
             
