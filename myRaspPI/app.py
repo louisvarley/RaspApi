@@ -119,7 +119,7 @@ def main():
                     #except:
                         #time.sleep(0)
                     flask._reset_internal_locks(True)
-                    logging.loggingService.logInfo(" * Restarting RaspiApi v1.0." + str( myRaspPI.config.getVersion()))
+                    logging.loggingService.logInfo(" * Restarting RaspiApi 1.0." + str( myRaspPI.config.getVersion()))
                     flask = threading.Thread(target=app.run,args=(myRaspPI.config.host, myRaspPI.config.port))
                     flask.setName('Flask Server')
                     flask.daemon = True

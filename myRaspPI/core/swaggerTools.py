@@ -13,7 +13,7 @@ from myRaspPI import config
 
 def defaultRoutes(app,swagger):
     name = str(platform.uname()[1])
-    route = '/' + name + '/getClientInfo'
+    route = '/' + name.upper() + '/getClientInfo'
 
     specs_dict = {
         "parameters": [

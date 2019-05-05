@@ -21,7 +21,7 @@ def getVersion():
         return int(f.readline().replace('version=',''))
 
 def getFullVersion():
-    return "v1.0." + str(getVersion())
+    return "1.0." + str(getVersion())
 
 def hasVersionChanged():
 
