@@ -85,7 +85,7 @@ def swagFromClient(jsonUrl,name,app,swagger):
     except: 
         logging.loggingService.logInfo("   Unable to swag from " + jsonUrl)
           
-
+    logging.loggingService.logInfo("   Swag resources from " + name)
     for path in data['paths']:
         try:
             

@@ -11,7 +11,7 @@ class Discovery():
     magicPrefix = "myRaspPI"
     magicPort = 50000
     magicIP = gethostbyname(gethostname()) 
-    magicClientString = magicPrefix + magicIP+":"+str(myRaspPI.config.port)+":"+ str(platform.uname()[1])
+    magicClientString = magicPrefix + magicIP+":"+str(myRaspPI.config.port)+":"+ str(platform.uname()[1].upper())
 
 class Client():
 
