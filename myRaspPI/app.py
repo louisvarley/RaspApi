@@ -1,5 +1,6 @@
 import myRaspPI
 import signal
+import random
 
 from myRaspPI import config, core 
 from myRaspPI.core import discovery, updater, logging, swaggerTools
@@ -88,7 +89,11 @@ def main():
 
     swaggerTools.defaultRoutes(app,swagger)
 
-    flask = threading.Thread(target=app.run,args=(myRaspPI.config.host, myRaspPI.config.port))
+
+    extra_files = []
+    extra_files.append(myRaspPI.config.workingDir + "/" + "clients")
+
+    flask = threading.Thread(target=app.run,kwargs={'debug':true,'port':myRaspPI.config.port,'host':myRaspPI.config.hostName,'extra_files':extra_files})                 
     flask.setName('Flask Server')
     flask.daemon = True
     flask.start()
@@ -111,10 +116,15 @@ def main():
                     client.loaded = True
                     myRaspPI.config.flask._reset_internal_locks(True)
 
+                    f= open(myRaspPI.config.workingDir + "/" + "clients","w+")
+                    f.write(str(random.randint(1,101)))
+                    f.close()
+
+                    (myRaspPI.config.workingDir + "/" + "clients")
+
                     #try:
                     swaggerTools.swagFromClient(client.apiSpec,client.hostName,app,swagger)
-                    flask._reset_internal_locks(True)
-                    
+                             
         time.sleep(1) 
 
 
